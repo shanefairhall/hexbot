@@ -81,18 +81,18 @@ function drawPoint(ctx, point) {
   //---------------------
 
 
-  //-------------------smooth picture
+  //-------------------smooth picture, like a pixelated landscape
   if (countx==0 && county==0) {
     ctx.fillStyle = point.value;
-    ctx.fillRect(nextx,nexty,10,10);
+    ctx.fillRect(nextx,nexty,10,10);  //make a small square
     nextx=nextx+12; // move position of next pixel
     countx += 1;
     pixels[countx,county] = point.value; //add the current pixel to the array
   }
 
 
-  //  NOTE substr(1) removes the hash
-  //compare this pixel with the one previous  OR  compare this pixel with the one above
+  //  NOTE substr(1) removes the hash sign from the hex value
+  //compare this pixel with the one to the left  OR  compare this pixel with the one above to ensure they are similar enough
 
 
   else if ((diff(parseInt(point.value.substr(1), 16), parseInt(pixels[countx,county].substr(1), 16)) < 3000000 )||(county>1 && diff(parseInt(point.value.substr(1), 16), parseInt(pixels[countx,county-1].substr(1), 16)) < 2000000)) {
@@ -100,7 +100,7 @@ function drawPoint(ctx, point) {
     ctx.fillRect(nextx,nexty,10,10);
     nextx=nextx+12; // move position of next pixel
     countx += 1;
-    if (countx==20) {  //end of a row
+    if (countx==20) {  //end of a row so reset x and increase y
       countx=0;
       county +=1
       nextx = 2;
@@ -108,7 +108,7 @@ function drawPoint(ctx, point) {
     }
     pixels[countx,county] = point.value; //add the current pixel to the array
   }
-  if (county==20) {
+  if (county==20) {  // if the 20x20 picture has been made, wipe the canvas and start again. Could I capture the picture?
     sizeCanvas();
     county=0;
     nexty=2;
