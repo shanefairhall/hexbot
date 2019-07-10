@@ -10,7 +10,7 @@ function start_app() {
   sizeCanvas();
 
   //set up a ticker to refresh page automatically.
-  let speed = 300; // how often screen refreshes, in milliseconds.
+  let speed = 3000; // how often screen refreshes, in milliseconds.
   let ticker = NOOPBOT_TICK_SETUP(draw, speed);
 
   //fire a draw event.
@@ -21,8 +21,8 @@ function start_app() {
 }
 
 function sizeCanvas() {
-  appWidth = window.innerWidth;
-  appHeight = window.innerHeight;
+  appWidth = 600; //window.innerWidth;
+  appHeight = 600; //window.innerHeight;
   canvas = document.getElementById('canvas');
   ctx = NOOPBOT_SETUP_CANVAS( { canvas: canvas, bgColor:'#ffffff' });
 }
@@ -31,7 +31,7 @@ function draw() {
   //get the data!
   NOOPBOT_FETCH({
     API: 'hexbot',
-    count: 1000,
+    count: 1,
     width: appWidth,
     height: appHeight,
     seed: 'FF7F50,FFD700,FF8C00',
@@ -47,7 +47,7 @@ function drawSet(responseJson) {
 
 function drawPoint(ctx, point) {
   ctx.fillStyle = point.value;
-  let pointSize = NOOPBOT_RANDOM(1,8);
+  let pointSize = NOOPBOT_RANDOM(5,60);
   ctx.globalAlpha = Math.random();
   ctx.beginPath();
   ctx.arc(point.coordinates.x, point.coordinates.y, pointSize, 0, Math.PI * 2, true);
